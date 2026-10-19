@@ -1,0 +1,102 @@
+# Conda环境配置文件
+# ====================================
+# 项目: GCN-LLM-UniMol
+# 生成时间: 2026-02-20
+# Python版本: 3.8
+# ====================================
+
+name: myenv
+
+channels:
+  - pytorch
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python版本
+  - python=3.8
+
+  # 深度学习框架 (从PyTorch channel)
+  - pytorch>=1.12.0
+  - torchvision>=0.13.0
+  - torchaudio>=0.12.0
+  - cpuonly  # 如果使用GPU，改为 cudatoolkit=11.8
+
+  # 化学信息学 (从conda-forge)
+  - rdkit>=2022.9.5
+
+  # 科学计算
+  - numpy>=1.21.0
+  - scipy>=1.7.0
+  - pandas>=1.3.0
+  - scikit-learn>=1.0.0
+
+  # 可视化
+  - matplotlib>=3.4.0
+  - seaborn>=0.11.0
+
+  # 生物信息学
+  - biopython>=1.79
+
+  # 工具
+  - tqdm>=4.62.0
+  - requests>=2.26.0
+  - pillow>=8.3.0
+
+  # pip安装的包
+  - pip
+  - pip:
+    # 图神经网络 (必须用pip安装)
+    - torch-geometric>=2.0.0
+    - torch-scatter>=2.0.9
+    - torch-sparse>=0.6.15
+    - torch-cluster>=1.6.0
+    - torch-spline-conv>=1.2.1
+    
+    # ChEMBL数据
+    - chembl-webresource-client>=0.10.0
+    
+    # 可选: UniMol (需要从源码安装)
+    # - git+https://github.com/dptech-corp/Uni-Core.git
+
+# ====================================
+# 使用说明
+# ====================================
+#
+# 1. 创建环境:
+#    conda env create -f environment.yml
+#
+# 2. 激活环境:
+#    conda activate myenv
+#
+# 3. 验证安装:
+#    python -c "import torch; print(torch.__version__)"
+#    python -c "import rdkit; print(rdkit.__version__)"
+#    python -c "import torch_geometric; print(torch_geometric.__version__)"
+#
+# 4. 更新环境:
+#    conda env update -f environment.yml --prune
+#
+# 5. 导出当前环境:
+#    conda env export --no-builds > environment.yml
+#
+# ====================================
+# GPU版本配置
+# ====================================
+#
+# 如果需要使用GPU，修改以下行:
+#   - cpuonly  # 删除这行
+#   + cudatoolkit=11.8  # 添加这行（根据你的CUDA版本）
+#
+# 或者在创建环境后安装GPU版本的PyTorch:
+#   conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
+#
+# ====================================
+# 注意事项
+# ====================================
+#
+# 1. RDKit必须从conda-forge安装，pip安装可能有问题
+# 2. PyTorch Geometric相关包建议用pip安装
+# 3. 确保PyTorch版本与CUDA版本匹配
+# 4. unicore需要单独从GitHub安装
+# 5. 如果遇到依赖冲突，可以尝试创建新环境

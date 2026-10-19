@@ -1,0 +1,45 @@
+# ============================================================
+# 外部模型权重（超过 GitHub 单文件 100 MB 限制，请按 README 自行下载）
+# ============================================================
+checkpoints/*.pt
+checkpoints/*.pth
+checkpoints/*.ckpt
+!checkpoints/.gitkeep
+
+models--seyonec--ChemBERTa-zinc-base-v1/snapshots/*/pytorch_model.bin
+models--seyonec--ChemBERTa-zinc-base-v1/snapshots/*/*.safetensors
+models--*/blobs/
+
+# ============================================================
+# Python
+# ============================================================
+__pycache__/
+*.py[cod]
+*.so
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+build/
+dist/
+*.egg-info/
+
+# ============================================================
+# 运行产物
+# ============================================================
+/results/
+Final/output/
+Final/results/
+Final/results_v3/
+unimol_data/
+runs/
+wandb/
+*.log
+
+# ============================================================
+# 系统 / 编辑器
+# ============================================================
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
