@@ -7,17 +7,35 @@
 [![Python](https://img.shields.io/badge/Python-3.8%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.12%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![PyG](https://img.shields.io/badge/PyG-2.0%2B-3C2179)](https://pytorch-geometric.readthedocs.io/)
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![License](https://img.shields.io/badge/License-All%20Rights%20Reserved-red.svg)](LICENSE)
+[![Commercial](https://img.shields.io/badge/Commercial%20Use-Not%20Permitted-critical.svg)](LICENSE)
+[![Publication](https://img.shields.io/badge/Academic%20Publication-By%20Permission-orange.svg)](LICENSE)
 
 `630` 个 XOD 分子 · 测试集 ROC-AUC `0.827` · 模型约 `0.19 M` 参数
 
+**基于 [DrugCLIP](https://github.com/dptech-corp/Uni-Mol/tree/main/drugclip) 与 GCN-LLM 构建 · 个人作品**
+
 </div>
+
+> ### ⚠️ 版权与使用限制
+>
+> **Copyright © 2026 GCN-LLM-UniMol 项目作者（个人）。All Rights Reserved.**
+>
+> - 本项目由作者**个人**独立整合与实现，**基于 DrugCLIP 与 GCN-LLM** 两项公开工作构建；
+> - **禁止任何形式的商业使用**（含商业产品、SaaS、咨询交付、企业内部商业研发）；
+> - **未经作者书面许可，不得将本项目的代码、权重、数据或实验结果用于论文、学位论文、
+>   预印本、专利或任何学术发表**；
+> - 转载、镜像、二次分发必须保留本版权声明与 [LICENSE](LICENSE)，否则视为侵权。
+>
+> 第三方组件（DrugCLIP 源码/权重、ChemBERTa、PyG 等）版权归各自作者，详见
+> [来源与版权](#来源与版权) 与 [授权与限制](#授权与限制)。
 
 ---
 
 ## 目录
 
 - [项目简介](#项目简介)
+- [来源与版权](#来源与版权)
 - [效果](#效果)
 - [模型架构](#模型架构)
 - [仓库结构](#仓库结构)
@@ -31,8 +49,8 @@
 - [更严格的评估](#更严格的评估)
 - [已知局限](#已知局限)
 - [整理说明](#整理说明)
-- [引用](#引用)
-- [许可证](#许可证)
+- [引用与致谢](#引用与致谢)
+- [授权与限制](#授权与限制)
 - [发布到 GitHub](#发布到-github)
 - [English](#english)
 
@@ -56,6 +74,43 @@ GCN-LLM-UniMol 把同一个分子的三种表示拼在一起，再与靶点蛋�
 
 **本仓库是一个可直接运行的完整实验包**：代码 + 已清洗的 XOD 数据 + 预计算嵌入 +
 训练好的权重 + 训练报告，同时保留了对 DrugCLIP / Uni-Mol / ChemBERTa 的接入。
+
+## 来源与版权
+
+### 这个项目是怎么来的
+
+本仓库是**作者个人**在两项公开工作的基础上完成的整合与实现：
+
+| 基础工作 | 提供了什么 | 本项目在此基础上做了什么 |
+|---|---|---|
+| **DrugCLIP**（AIR，清华大学；DP Technology） | Uni-Mol 3D 编码器、蛋白-分子对比学习框架、预训练权重 | 复用其 512 维构象嵌入与权重加载链路，改造为单靶点分子-蛋白对齐 |
+| **GCN-LLM** | "GCN + 大语言模型语义" 的分子表示路线 | 把 LLM 语义与 3D 构象注入**每一层 GCN**，形成 192 维三模态表示 |
+| **作者原创** | 融合结构、数据管线、训练/评估脚本、XOD 数据集与嵌入、训练权重、图表与文档 | 即本仓库的全部实现（区别于上述两项公开工作） |
+
+### 版权归属
+
+| 组成部分 | 版权 / 许可 |
+|---|---|
+| **作者原创部分**：三模态融合结构、`Final/` 下全部脚本、清洗后的数据、预计算嵌入、训练得到的 `best_model.pt`、图表与文档 | **Copyright © 2026 GCN-LLM-UniMol 项目作者（个人）。All Rights Reserved.** 见 [LICENSE](LICENSE) |
+| `DrugCLIP-main/`（DrugCLIP 源码） | © 2025 Institute for AI Industry Research (AIR), Tsinghua University；部分改编自 DP Technology。**Apache License 2.0**，见 [`DrugCLIP-main/LICENSE`](DrugCLIP-main/LICENSE) |
+| `checkpoints/drugclip.pt`（DrugCLIP 预训练权重及其输出） | **CC BY-NC 4.0**（署名—非商业），商业使用需联系其作者 |
+| ChemBERTa 权重（`models--seyonec--ChemBERTa-zinc-base-v1/`） | 版权归 seyonec 等原作者，按其 Hugging Face 模型卡许可使用 |
+| PyTorch / PyTorch Geometric / RDKit / BioPython 等依赖 | 归各自作者，按其许可证使用 |
+
+> 本仓库**不对上述第三方组件主张任何版权**，作者的权利仅覆盖自己原创的部分。
+> 因此整包遵循"**上游许可 + 作者附加限制**"：第三方部分仍按 Apache-2.0 / CC BY-NC 4.0
+> 等原许可使用；作者原创部分适用 [LICENSE](LICENSE) 中的全部限制（禁止商业、禁止未经许可发表）。
+
+### 反剽窃声明
+
+- 本项目的每个源文件都带版权头（`DrugCLIP-main/` 等第三方代码保留其原始声明），
+  仓库根目录另有 [LICENSE](LICENSE) 与本文的版权声明；
+  项目的公开发布时间以 **Git 提交历史**为准，
+  建议克隆后保留完整 `.git` 目录作为时间证据；
+- **禁止**删除、隐藏或篡改版权声明后再发布、再分发；
+- **禁止**把本项目的代码、权重、数据或图表整体或部分包装成他人作品（改名发布、课程作业、
+  竞赛提交、公司内部项目、二次售卖等均属此列）；
+- 一旦发现侵权，作者保留追究法律责任、向平台投诉（DMCA）以及公开说明的权利。
 
 ## 效果
 
@@ -389,9 +444,9 @@ python Final/upgrade/element_tokenizer.py --dict DrugCLIP-main/data/dict_mol.txt
 
 **保留**：`DrugCLIP-main/`（unimol 包与词表）、`Final/results_complete/`、XOD 数据与预计算嵌入。
 
-## 引用
+## 引用与致谢
 
-如果这个仓库对你有帮助，请引用它依赖的上游工作：
+本项目的实现建立在下列公开工作之上，请在使用、讨论或复现时一并引用：
 
 ```bibtex
 @article{gao2023drugclip,
@@ -416,26 +471,44 @@ python Final/upgrade/element_tokenizer.py --dict DrugCLIP-main/data/dict_mol.txt
 }
 ```
 
-## 许可证
+**致谢**：感谢 DrugCLIP / Uni-Mol 团队（AIR 清华大学、DP Technology）开源的模型与权重，
+感谢 seyonec 发布的 ChemBERTa，以及 PyTorch Geometric、RDKit、BioPython 等开源社区。
 
-本项目代码采用 [MIT License](LICENSE)。
-`DrugCLIP-main/`、ChemBERTa 权重及 PyTorch Geometric 等第三方组件的版权与许可归各自作者所有，
-使用前请阅读 `DrugCLIP-main/LICENSE` 与对应模型卡。
+> 引用上述论文**不等于**获得本仓库原创部分的使用授权。
+> **本项目的代码、权重、数据与实验结论未经作者书面许可，不得用于论文、学位论文、
+> 预印本、专利或任何学术发表**（见 [授权与限制](#授权与限制)）。
+> 如需合作研究或引用本项目，请先联系作者。
 
-## 发布到 GitHub
+## 授权与限制
 
-```bash
-git init
-git add .
-git commit -m "feat: GCN-LLM-UniMol 三模态分子表示与虚拟筛选"
-git branch -M main
-git remote add origin https://github.com/<your-name>/GCN-LLM-UniMol.git
-git push -u origin main
-```
+本项目**不是**开源软件（not open source）。作者原创部分采用"保留所有权利 + 有限许可"，
+完整条款见 [LICENSE](LICENSE)，要点如下：
 
-`.gitignore` 已排除两个大权重，正常推送不会触发 GitHub 的 100 MB 限制。
+**✅ 允许（无需申请）**
 
----
+- 个人学习、技术研究与非商业性的内部实验；
+- 在保留完整版权声明与出处的前提下，复制、修改用于**非商业**目的；
+- 课堂教学与学术讨论中的演示（非商业、非发表）。
+
+**❌ 禁止（需事先获得作者书面许可）**
+
+| 类别 | 具体行为 |
+|---|---|
+| **商业使用** | 任何商业产品/服务、SaaS 或 API 交付、咨询与外包交付、企业内部商业研发、制药或生物技术公司的内部筛选流程、二次售卖、付费培训 |
+| **学术发表** | 将本项目的代码、权重、数据、图表或实验结论用于期刊论文、会议论文、学位论文、预印本（arXiv / bioRxiv 等）、专利申请、基金结题材料 |
+| **再分发** | 未经许可转载、镜像、打包上传到其他平台，或整体/部分并入其他仓库后发布 |
+| **署名侵害** | 删除、隐藏、篡改版权声明与作者信息；改名后据为己有；声称这是自己的原创工作 |
+| **模型滥用** | 用本项目权重对外声称具备临床/实验效力，或提供收费的药物筛选结论 |
+
+**📩 申请授权**：请通过 GitHub Issue 或仓库主页上的联系方式联系作者，说明用途、范围与期限；
+作者可单独授予商业或学术使用许可（可附加条件）。
+
+> 上述限制**不适用于作者本人**及其书面授权的合作者——作者保留将本项目用于自身论文、
+> 学位论文、专利与商业合作的全部权利。
+
+**⚖️ 第三方组件不受本节约束**：`DrugCLIP-main/` 仍为 Apache-2.0；DrugCLIP 权重及其输出仍为
+CC BY-NC 4.0；ChemBERTa 等按其原始许可。使用这些部分时请遵守其各自条款——它们**不会**因为
+本仓库的附加限制而变得更宽松，也**不会**因为本仓库的限制而被收紧。
 
 ## English
 
@@ -457,4 +530,16 @@ python Final/train.py --data Final/complete_embeddings/training_data_complete.pk
 ```
 
 Model weights (DrugCLIP 1.1 GB, ChemBERTa 170 MB) are not distributed here; download
-instructions are in [模型权重](#2-模型权重). Licensed under MIT.
+instructions are in [模型权重](#2-模型权重).
+
+**License / copyright**: © 2026 the author of this project (an individual). **All rights
+reserved — this is NOT open source.** The original parts of this repository (fusion
+architecture, code under `Final/`, cleaned data, precomputed embeddings, trained weights,
+figures, documents) may **not** be used commercially, and may **not** be used in papers,
+theses, preprints, patents or any academic publication without prior written permission.
+See [LICENSE](LICENSE) and [授权与限制](#授权与限制).
+
+**Built upon** [DrugCLIP](https://github.com/dptech-corp/Uni-Mol/tree/main/drugclip)
+(Apache-2.0 code, CC BY-NC 4.0 weights) and the GCN-LLM line of work (GCN + LLM semantic
+fusion). Third-party components remain under their own licenses and are **not** claimed
+by this project.
